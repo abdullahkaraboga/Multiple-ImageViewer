@@ -20,8 +20,9 @@ class HomeViewModel: ObservableObject {
     @Published var showImageViewer = false
     @Published var selectedImageID: String = ""
     @Published var imageViewerOffset: CGSize = .zero
-
     @Published var bgOpacity: Double = 1
+    @Published var imageScale: CGFloat = 1
+
 
     func onChange(value: CGSize) {
 

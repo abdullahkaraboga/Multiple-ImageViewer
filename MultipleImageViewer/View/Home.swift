@@ -56,7 +56,7 @@ struct Home: View {
                 if homeData.showImageViewer {
                     
                     
-                    Color.black
+                    Color("bg")
                         .opacity(homeData.bgOpacity)
                         .ignoresSafeArea()
                     
