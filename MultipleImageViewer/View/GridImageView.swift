@@ -14,26 +14,53 @@ struct GridImageView: View {
 
     var body: some View {
 
-        ZStack {
-            if index <= 3 {
-                Image(homeData.allImages[index])
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: (getRect().width - 100) / 2, height: 120)
-                    .cornerRadius(12)
+        Button {
+            withAnimation(.easeInOut) {
+                homeData.selectedImageID = homeData.allImages[index]
+                homeData.showImageViewer.toggle()
+
+
             }
-            if homeData.allImages.count > 4 && index == 3 {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.black.opacity(0.3))
+        } label: {
+            ZStack {
+                if index <= 3 {
+                    Image(homeData.allImages[index])
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: getWidth(index: index), height: 120)
+                        .cornerRadius(12)
+                }
+                if homeData.allImages.count > 4 && index == 3 {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.black.opacity(0.3))
 
-                let remainingImages = homeData.allImages.count - 4
+                    let remainingImages = homeData.allImages.count - 4
 
-                Text("+\(remainingImages)")
-                    .font(.title)
-                    .fontWeight(.heavy)
-                    .foregroundColor(.white)
+                    Text("+\(remainingImages)")
+                        .font(.title)
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                }
             }
         }
+
+    }
+
+    func getWidth(index: Int) -> CGFloat {
+
+        let width = getRect().width - 100
+
+        if homeData.allImages.count % 2 == 0 {
+            return width / 2
+        } else {
+            if index == homeData.allImages.count - 1 {
+                return width
+            } else {
+                return width / 2
+
+            }
+        }
+
     }
 }
 

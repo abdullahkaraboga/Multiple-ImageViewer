@@ -11,6 +11,10 @@ struct Home: View {
 
     @StateObject var homeData = HomeViewModel()
 
+    init() {
+        UIScrollView.appearance().bounces = false
+    }
+
     var body: some View {
 
         ScrollView {
@@ -34,7 +38,7 @@ struct Home: View {
 
                            let columns = Array(repeating: GridItem(.flexible(), spacing: 15), count: 2)
 
-                           LazyVGrid(columns: columns, alignment: .center, spacing: 10, content: {
+                           LazyVGrid(columns: columns, alignment: .leading, spacing: 10, content: {
                                          ForEach(homeData.allImages.indices, id: \.self) { index in
 
                                              GridImageView(index: index)
@@ -46,7 +50,22 @@ struct Home: View {
                        })
             }).padding()
                 .frame(maxWidth: .infinity, alignment: .leading)
-        }
+        }.overlay(
+
+            ZStack {
+                if homeData.showImageViewer {
+                    
+                    
+                    Color.black
+                        .opacity(homeData.bgOpacity)
+                        .ignoresSafeArea()
+                    
+                    
+                    ImageView()
+                }
+            }
+
+        )
             .environmentObject(homeData)
     }
 }
@@ -54,6 +73,6 @@ struct Home: View {
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Home()
+        ContentView()
     }
 }
